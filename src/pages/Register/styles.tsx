@@ -1,21 +1,20 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-
+    
     container: {
         backgroundColor: '#b5b5b5',
-        paddingTop: 10,
         flex: 1,
         position: 'relative',
     },
-    
+
     centerizedView: {
         width: '100%',
-        top: '15%',
+        top: '3%',
     },
 
     box: {
-        width: '80%',
+        width: '90%',
         backgroundColor: '#5482ff',
         borderRadius: 20,
         alignSelf: 'center',
@@ -26,12 +25,5 @@ export default StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
-    },
-
-    loginTitleText: {
-        alignSelf: 'center',
-        fontSize: 30,
-        fontWeight: 'bold',
-        marginTop: 10,
     },
 });

@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import 'react-native-gesture-handler';
 
 import LoginPage from '../pages/Login';
+import RegisterPage from '../pages/Register';
 
 const Stack = createStackNavigator();
 
@@ -14,12 +15,11 @@ export default function Routes() {
         <NavigationContainer>
             <StatusBar style="auto" />
       
-            <Stack.Navigator>
+            <Stack.Navigator initialRouteName="Login">
                 <Stack.Screen name="Login" component={LoginPage} />
+                <Stack.Screen name="Cadastro" component={RegisterPage} />
             </Stack.Navigator>
 
         </NavigationContainer>
-
-        // screenOptions={{ headerShown: false }}
     );
 }
