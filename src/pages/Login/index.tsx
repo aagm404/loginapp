@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 
-import ActionButton from '../../components/ActionButton';
+import LoginButton from '../../components/LoginButton';
 import InputTextField from '../../components/InputTextField';
 import Logo from '../../components/Logo';
 import RegisterAnchor from '../../components/RegisterAnchor';
@@ -20,21 +20,19 @@ export default function LoginPage() {
     const userLogin = {login, password} as UserLogin;
     
     async function submitLoginAction(userLogin: UserLogin) {
-        console.log(userLogin)
         const loginResponse = {status: 0, data: ""};
         await submitLogin(userLogin)
         .then(response => {
-            console.log(response);
+            console.log(`Response Status: ${response.status}`);
+            console.log(`Response Message: ${response.data}`);
             loginResponse.status = response.status;
             loginResponse.data = response.data
             alert(`Status: ${loginResponse.status}`)
         }).catch(error => {
-            console.log(error.response);
-            loginResponse.status = error.response.status;
-            loginResponse.data = error.response.data
-            alert(`Status: ${loginResponse.status}`)
+            console.log(`Error Status: ${error.response.status}`);
+            console.log(`Error Message: ${error.response.data}`);
+            alert("Email e/ou senha inválidos!\nTente novamente");
         });
-        console.log(loginResponse);
     }
 
     function goRegister() {
@@ -50,7 +48,7 @@ export default function LoginPage() {
                     <InputTextField label="Email" autoCapitalize="none" keyboardType="email-address" textContentType="emailAddress" value={login} onChange={setLogin} />
                     <InputTextField label="Senha" autoCapitalize="none" keyboardType="default" textContentType="password" secureTextEntry={true} value={password} onChange={setPassword} />
                     
-                    <ActionButton label="Login" userLogin={userLogin} onPressActionButton={() => submitLoginAction(userLogin)} />
+                    <LoginButton label="Login" userLogin={userLogin} onPressLoginButton={() => submitLoginAction(userLogin)} />
                     <RegisterAnchor registerNavigation={goRegister}/>
                 </View>
             </View>

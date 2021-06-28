@@ -6,7 +6,7 @@ import styles from './styles';
 interface Props {
     onChange: (text: string) => void;
     label: string;
-    value: string  | undefined;
+    value: string | undefined;
     autoCapitalize?: 'none' | 'words';
     keyboardType?: KeyboardTypeOptions;
     textContentType?: 'fullStreetAddress' | 'emailAddress' | 'name' | 'password';

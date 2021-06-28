@@ -1,4 +1,6 @@
 import axios from "axios";
+
+import { User } from "../models/user";
 import { UserLogin } from "../models/userLogin";
 
 const baseApiUrl = "https://example-ecommerce.herokuapp.com/";
@@ -12,11 +14,30 @@ export function submitLogin(userLogin: UserLogin) {
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
-            "Connection": "keep-alive"
         },
         data: {
             login: userLogin.login,
             password: userLogin.password
+        }
+    });
+}
+
+export function submitRegister(user: User) {
+
+    return axios({
+        baseURL: baseApiUrl,
+        url: "user/customer/add",
+        method: "post",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        },
+        data: {
+            address: user.address,
+            age: user.age,
+            email: user.email,
+            name: user.name,
+            userPassword: user.password,
         }
     });
 }

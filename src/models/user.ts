@@ -1,8 +1,8 @@
 export interface User {
     address: string;
-    age: number;
+    age: string;
     email: string;
     name: string;
     password: string;
-    token: string;
+    // token: string;
 }

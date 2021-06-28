@@ -2,22 +2,22 @@ import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import { BorderlessButton } from 'react-native-gesture-handler';
 
-import { UserLogin } from '../../models/userLogin';
+import { User } from '../../models/user';
 
 import styles from './styles';
 
 interface Props {
-    userLogin: UserLogin
-    onPressActionButton: (userLogin: UserLogin) => void;
+    user: User
+    onPressRegisterButton: (user: User) => void;
     label: string;
 }
 
-export default function ActionButton(props: Props) {
+export default function RegisterButton(props: Props) {
     
     return (
         <>
             <TouchableOpacity>
-                <BorderlessButton style={styles.button} onPress={() => props.onPressActionButton(props.userLogin)} >
+                <BorderlessButton style={styles.button} onPress={() => props.onPressRegisterButton(props.user)} >
                     <Text style={styles.text}>{props.label}</Text>
                 </BorderlessButton>
             </TouchableOpacity>
