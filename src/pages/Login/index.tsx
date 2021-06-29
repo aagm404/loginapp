@@ -7,7 +7,7 @@ import InputTextField from '../../components/InputTextField';
 import Logo from '../../components/Logo';
 import RegisterAnchor from '../../components/RegisterAnchor';
 import { UserLogin } from '../../models/userLogin';
-import { getProductList, submitLogin } from "../../services/apiCalls";
+import { submitLogin } from "../../services/apiCalls";
 
 import styles from './styles';
 
@@ -20,31 +20,29 @@ export default function LoginPage() {
     const userLogin = {login, password} as UserLogin;
     
     async function submitLoginAction(userLogin: UserLogin) {
+
+        const emailPattern = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
+
+        if (!emailPattern.test(String(userLogin.login))) {
+            alert('Email inválido');
+            return;
+
+        } else if (userLogin.login === undefined || userLogin.login.trim() === '') {
+            alert('O email é obrigatório');
+            return;
+
+        } else if (userLogin.password === undefined || userLogin.password.trim() === '') {
+            alert('A senha é obrigatória');
+            return;
+        }
+
         await submitLogin(userLogin)
         .then(response => {
-            console.log(`Login response status: ${response.status}`);
-            console.log(`Login response data: ${response.data}`);
             navigation.navigate("Home", response.data);
-            // goToUserHome(response.data);
         }).catch(error => {
-            console.log(`Login error status: ${error.response.status}`);
-            console.log(`Login error message: ${error.response.data}`);
             alert("Email e/ou senha inválidos!\nTente novamente");
         });
     }
-
-    // async function goToUserHome(token: string) {
-    //     await getProductList(token)
-    //     .then(response => {
-    //         console.log(`ProductList response status: ${response.status}`);
-    //         console.log(`ProductList response data: ${response.data}`);
-    //         const productList = response.data;
-    //         navigation.navigate("Home", productList);
-    //     }).catch(error => {
-    //         console.log(`ProductList error status: ${error.response.status}`);
-    //         console.log(`ProductList error message: ${error.response.data}`);
-    //     });
-    // }
 
     function goRegister() {
         navigation.navigate("Cadastro");

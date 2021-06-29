@@ -18,18 +18,44 @@ export default function ResgisterPage() {
     const [ email, setEmail ] = React.useState<string>();
     const [ name, setName ] = React.useState<string>();
     const [ password, setPassword ] = React.useState<string>();
-    // const [ token, setToken ] = React.useState<string>();
     const user = {address, age, email, name, password} as User
 
     async function submitRegisterAction(user: User) {
+
+        const emailPattern = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
+        
+        if (user.name === undefined || user.name.trim() === '') {
+            alert('O nome é obrigatório');
+            return;
+
+        } else if (user.age === undefined || user.age.trim() === '') {
+            alert('A idade é obrigatória');
+            return;
+
+        } else if (user.address === undefined || user.address.trim() === '') {
+            alert('O endereço é obrigatório');
+            return;
+
+        } else if (user.email === undefined || user.email.trim() === '') {
+            alert('O email é obrigatório');
+            return;
+
+        } else if (!emailPattern.test(String(user.email))) {
+            alert('Email inválido');
+            return;
+
+        } else if (user.password === undefined || user.password.trim() === '') {
+            alert('A senha é obrigatória');
+            return;
+        }
+
         await submitRegister(user)
         .then(response => {
-            console.log(`Register response status: ${response.status}`);
-            console.log(`Resgiter response message: ${response.data}`);
-            navigation.navigate("Login");
+            navigation.reset({
+                index: 0,
+                routes: [{ name: "Login"}]
+            });
         }).catch(error => {
-            console.log(`Resgiter error status: ${error.response.status}`);
-            console.log(`Resgiter error message: ${error.response.data}`);
             
             if (error.response.status === 400) {
                 if (error.response.data === "Customer must be an adult!") {
