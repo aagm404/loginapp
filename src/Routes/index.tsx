@@ -7,6 +7,7 @@ import 'react-native-gesture-handler';
 
 import LoginPage from '../pages/Login';
 import RegisterPage from '../pages/Register';
+import HomePage from '../pages/Home';
 
 const Stack = createStackNavigator();
 
@@ -18,6 +19,7 @@ export default function Routes() {
             <Stack.Navigator initialRouteName="Login">
                 <Stack.Screen name="Login" component={LoginPage} />
                 <Stack.Screen name="Cadastro" component={RegisterPage} />
+                <Stack.Screen name="Home" component={HomePage} />
             </Stack.Navigator>
 
         </NavigationContainer>

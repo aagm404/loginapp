@@ -7,7 +7,7 @@ import InputTextField from '../../components/InputTextField';
 import Logo from '../../components/Logo';
 import RegisterAnchor from '../../components/RegisterAnchor';
 import { UserLogin } from '../../models/userLogin';
-import { submitLogin } from "../../services/apiCalls";
+import { getProductList, submitLogin } from "../../services/apiCalls";
 
 import styles from './styles';
 
@@ -20,20 +20,31 @@ export default function LoginPage() {
     const userLogin = {login, password} as UserLogin;
     
     async function submitLoginAction(userLogin: UserLogin) {
-        const loginResponse = {status: 0, data: ""};
         await submitLogin(userLogin)
         .then(response => {
-            console.log(`Response Status: ${response.status}`);
-            console.log(`Response Message: ${response.data}`);
-            loginResponse.status = response.status;
-            loginResponse.data = response.data
-            alert(`Status: ${loginResponse.status}`)
+            console.log(`Login response status: ${response.status}`);
+            console.log(`Login response data: ${response.data}`);
+            navigation.navigate("Home", response.data);
+            // goToUserHome(response.data);
         }).catch(error => {
-            console.log(`Error Status: ${error.response.status}`);
-            console.log(`Error Message: ${error.response.data}`);
+            console.log(`Login error status: ${error.response.status}`);
+            console.log(`Login error message: ${error.response.data}`);
             alert("Email e/ou senha inválidos!\nTente novamente");
         });
     }
+
+    // async function goToUserHome(token: string) {
+    //     await getProductList(token)
+    //     .then(response => {
+    //         console.log(`ProductList response status: ${response.status}`);
+    //         console.log(`ProductList response data: ${response.data}`);
+    //         const productList = response.data;
+    //         navigation.navigate("Home", productList);
+    //     }).catch(error => {
+    //         console.log(`ProductList error status: ${error.response.status}`);
+    //         console.log(`ProductList error message: ${error.response.data}`);
+    //     });
+    // }
 
     function goRegister() {
         navigation.navigate("Cadastro");

@@ -13,7 +13,7 @@ export function submitLogin(userLogin: UserLogin) {
         method: "post",
         headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json",
+            "Accept": "application/json"
         },
         data: {
             login: userLogin.login,
@@ -30,7 +30,7 @@ export function submitRegister(user: User) {
         method: "post",
         headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json",
+            "Accept": "application/json"
         },
         data: {
             address: user.address,
@@ -42,11 +42,16 @@ export function submitRegister(user: User) {
     });
 }
 
-// login
-// https://example-ecommerce.herokuapp.com/user/login
+export function getProductList(token: string) {
 
-// listarProdutos
-// https://example-ecommerce.herokuapp.com/product/list
-
-// cadastrarUsuario
-// https://example-ecommerce.herokuapp.com/user/customer/add
+    return axios({
+        baseURL: baseApiUrl,
+        url: "product/list",
+        method: "get",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+    });
+}

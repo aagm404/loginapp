@@ -1,6 +1,6 @@
-import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import RegisterButton from '../../components/RegisterButton';
 import InputTextField from '../../components/InputTextField';
@@ -24,12 +24,12 @@ export default function ResgisterPage() {
     async function submitRegisterAction(user: User) {
         await submitRegister(user)
         .then(response => {
-            console.log(`Response Status: ${response.status}`);
-            console.log(`Response Message: ${response.data}`);
+            console.log(`Register response status: ${response.status}`);
+            console.log(`Resgiter response message: ${response.data}`);
             navigation.navigate("Login");
         }).catch(error => {
-            console.log(`Error Status: ${error.response.status}`);
-            console.log(`Error Message: ${error.response.data}`);
+            console.log(`Resgiter error status: ${error.response.status}`);
+            console.log(`Resgiter error message: ${error.response.data}`);
             
             if (error.response.status === 400) {
                 if (error.response.data === "Customer must be an adult!") {
