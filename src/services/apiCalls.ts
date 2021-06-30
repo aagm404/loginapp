@@ -42,16 +42,16 @@ export function submitRegister(user: User) {
     });
 }
 
-// export function getProductList(token: string) {
+export function getProductList(token: string) {
 
-//     return axios({
-//         baseURL: baseApiUrl,
-//         url: "product/list",
-//         method: "get",
-//         headers: {
-//             "Content-Type": "application/json",
-//             "Accept": "application/json",
-//             "Authorization": `Bearer ${token}`
-//         }
-//     });
-// }
+    return axios({
+        baseURL: baseApiUrl,
+        url: "product/list",
+        method: "get",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+    });
+}

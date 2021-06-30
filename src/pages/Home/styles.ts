@@ -8,7 +8,8 @@ export default StyleSheet.create({
         position: 'relative',
     },
 
-    list: {
-        width: Dimensions.get('window').width - 20
+    centerizedView: {
+        width: '96%',
+        alignSelf: 'center'
     },
 });

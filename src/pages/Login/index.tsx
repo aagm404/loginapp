@@ -23,12 +23,12 @@ export default function LoginPage() {
 
         const emailPattern = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
 
-        if (!emailPattern.test(String(userLogin.login))) {
-            alert('Email inválido');
-            return;
-
-        } else if (userLogin.login === undefined || userLogin.login.trim() === '') {
+        if (userLogin.login === undefined || userLogin.login.trim() === '') {
             alert('O email é obrigatório');
+            return;
+            
+        } else if (!emailPattern.test(String(userLogin.login))) {
+            alert('Email inválido');
             return;
 
         } else if (userLogin.password === undefined || userLogin.password.trim() === '') {
@@ -40,6 +40,7 @@ export default function LoginPage() {
         .then(response => {
             navigation.navigate("Home", response.data);
         }).catch(error => {
+            console.log(error.message);
             alert("Email e/ou senha inválidos!\nTente novamente");
         });
     }

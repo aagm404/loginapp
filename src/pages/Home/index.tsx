@@ -1,6 +1,6 @@
 import React from 'react';
-import { FlatList, Text, View } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { FlatList, View } from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { getProductList } from '../../services/apiCalls';
 
 import ProductRow from '../../components/ProductRow';
@@ -10,6 +10,8 @@ import styles from './styles';
 
 export default function HomePage() {
 
+    const navigation = useNavigation();
+
     const route = useRoute();
     const object = route.params;
     const quotedToken = JSON.stringify(object);
@@ -18,32 +20,29 @@ export default function HomePage() {
     const [products, setProducts] = React.useState<Product[]>();
     
     React.useEffect(() => {
-        getProducts().then(list => setProducts(list));
+        getProducts();
     },[]);
 
     async function getProducts() {
-        const { data } = await getProductList().get('');
-        const obj: Product[] = data;
-        return obj;
+        await getProductList(token)
+        .then(response => {
+            setProducts(response.data);
+        }).catch(error => {
+            alert("Não foi possível obter os produtos");
+            navigation.navigate("Login");
+        });
     }
-
+    
     return (
         <View style={styles.container}>
-           <Text>Os produtos deveriam serem exibidos aqui!!!</Text>
+            <FlatList
+                data={products}
+                style={styles.centerizedView}
+                keyExtractor={(products) => products.id.toString()}
+                renderItem={({ item }) => (
+                    <ProductRow product={item} />
+                )}
+            />
         </View>
     );
-
-    //
-    // return (
-    //     <View style={styles.container}>
-    //         <FlatList
-    //             data={products}
-    //             style={styles.list}
-    //             keyExtractor={(product) => product.id.toString()}
-    //             renderItem={({ item }) => (
-    //                 <ProductRow product={item} />
-    //             )}
-    //         />
-    //     </View>
-    // );
 }

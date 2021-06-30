@@ -1,10 +1,10 @@
 export interface Product {
-    amount: number,
+    id: number;
+    name: string;
+    price: number;
+    amount: number;
     factory: {
-      id: number,
-      name: string,
-    },
-    id: number,
-    name: string,
-    price: number
+        id: number;
+        name: string;
+    };
 }
