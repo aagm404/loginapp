@@ -18,6 +18,15 @@ export default function LoginPage() {
     const [ login, setLogin ] = React.useState<string>();
     const [ password, setPassword ] = React.useState<string>();
     const userLogin = {login, password} as UserLogin;
+
+    React.useEffect(() => {
+
+        navigation.setOptions({
+            headerTitle:() => (
+                <Text style={styles.headerTitle}>LoginApp</Text>
+            )
+        });
+    });
     
     async function submitLoginAction(userLogin: UserLogin) {
 
@@ -54,7 +63,6 @@ export default function LoginPage() {
             <View style={styles.centerizedView}>
                 <View style={styles.box}>
                     <Logo />
-                    <Text style={styles.loginTitleText}>LoginApp</Text>
                     <InputTextField label="Email" autoCapitalize="none" keyboardType="email-address" textContentType="emailAddress" value={login} onChange={setLogin} />
                     <InputTextField label="Senha" autoCapitalize="none" keyboardType="default" textContentType="password" secureTextEntry={true} value={password} onChange={setPassword} />
                     

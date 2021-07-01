@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import RegisterButton from '../../components/RegisterButton';
@@ -13,17 +13,26 @@ export default function ResgisterPage() {
 
     const navigation = useNavigation();
 
-    const [ address, setAddress ] = React.useState<string>();
-    const [ age, setAge ] = React.useState<string>();
-    const [ email, setEmail ] = React.useState<string>();
-    const [ name, setName ] = React.useState<string>();
-    const [ password, setPassword ] = React.useState<string>();
-    const user = {address, age, email, name, password} as User
+    const [address, setAddress] = React.useState<string>();
+    const [age, setAge] = React.useState<string>();
+    const [email, setEmail] = React.useState<string>();
+    const [name, setName] = React.useState<string>();
+    const [password, setPassword] = React.useState<string>();
+    const user = { address, age, email, name, password } as User
+
+    React.useEffect(() => {
+
+        navigation.setOptions({
+            headerTitle:() => (
+                <Text style={styles.headerTitle}>Cadastro</Text>
+            )
+        });
+    });
 
     async function submitRegisterAction(user: User) {
 
         const emailPattern = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
-        
+
         if (user.name === undefined || user.name.trim() === '') {
             alert('O nome é obrigatório');
             return;
@@ -50,37 +59,40 @@ export default function ResgisterPage() {
         }
 
         await submitRegister(user)
-        .then(response => {
-            navigation.reset({
-                index: 0,
-                routes: [{ name: "Login"}]
-            });
-        }).catch(error => {
-            
-            if (error.response.status === 400) {
-                if (error.response.data === "Customer must be an adult!") {
-                    alert("A idade deve ser maior ou igual à 18 anos!");
-                } else if (error.response.data === "Customer email is already registered.") {
-                    alert("Este e-mail já está em uso");
+            .then(response => {
+                alert("Cadastro realizado com sucesso!");
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: "Login" }]
+                });
+            }).catch(error => {
+
+                if (error.response.status === 400) {
+                    if (error.response.data === "Customer must be an adult!") {
+                        alert("A idade deve ser maior ou igual à 18 anos!");
+                    } else if (error.response.data === "Customer email is already registered.") {
+                        alert("Este e-mail já está em uso");
+                    }
+                } else {
+                    alert("Não foi possível fazer o cadastro!\nTente novamente");
                 }
-            } else {
-                alert("Não foi possível fazer o cadastro!\nTente novamente");
-            }
-        });
+            });
     }
 
     return (
         <View style={styles.container}>
             <View style={styles.centerizedView}>
-                <View style={styles.box}>
-                    <InputTextField label="Nome" autoCapitalize="words" keyboardType="default" textContentType="name" value={name} onChange={setName} />
-                    <InputTextField label="Idade" keyboardType="numeric" value={age} onChange={setAge} />
-                    <InputTextField label="Endereço" autoCapitalize="words" keyboardType="email-address" textContentType="fullStreetAddress" value={address} onChange={setAddress} />
-                    <InputTextField label="Email" autoCapitalize="none" keyboardType='email-address' textContentType="emailAddress" value={email} onChange={setEmail} />
-                    <InputTextField label="Senha" autoCapitalize="none" keyboardType="default" textContentType="password" secureTextEntry={true} value={password} onChange={setPassword} />
-                    
-                    <RegisterButton label="Cadastrar" user={user} onPressRegisterButton={() => submitRegisterAction(user)} /> 
-                </View>
+                <ScrollView>
+                    <View style={styles.box}>
+                        <InputTextField label="Nome" autoCapitalize="words" keyboardType="default" textContentType="name" value={name} onChange={setName} />
+                        <InputTextField label="Idade" keyboardType="numeric" value={age} onChange={setAge} />
+                        <InputTextField label="Endereço" autoCapitalize="words" keyboardType="email-address" textContentType="fullStreetAddress" value={address} onChange={setAddress} />
+                        <InputTextField label="Email" autoCapitalize="none" keyboardType='email-address' textContentType="emailAddress" value={email} onChange={setEmail} />
+                        <InputTextField label="Senha" autoCapitalize="none" keyboardType="default" textContentType="password" secureTextEntry={true} value={password} onChange={setPassword} />
+
+                        <RegisterButton label="Cadastrar" user={user} onPressRegisterButton={() => submitRegisterAction(user)} />
+                    </View>
+                </ScrollView>
             </View>
         </View>
     );

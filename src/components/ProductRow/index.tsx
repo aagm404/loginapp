@@ -16,7 +16,12 @@ export default function ProductRow(props: Props) {
         <View style={styles.productContainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.productView}>
-                    <MaterialCommunityIcons style={styles.productImage} name="cellphone" size={50} color="black" />
+                    <MaterialCommunityIcons 
+                        style={styles.productImage} 
+                        name={props.product.factory.name === "Samsung" ? "cellphone-android" : "cellphone-iphone"} 
+                        size={50} 
+                        color="black" 
+                    />
                     <View style={styles.productMiddleView}>
                         <Text style={styles.productName}>{props.product.name}</Text>
                         <Text style={styles.productFactoryName}>{props.product.factory.name}</Text>

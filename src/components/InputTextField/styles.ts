@@ -9,6 +9,7 @@ export default StyleSheet.create({
     inputLabel: {
         fontSize: 18,
         marginBottom: 6,
+        fontWeight: 'bold'
     },
 
     inputText: {

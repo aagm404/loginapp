@@ -2,6 +2,12 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
 
+    headerTitle: {
+        alignSelf: 'center',
+        fontSize: 24,
+        fontWeight: 'bold'
+    },
+
     container: {
         backgroundColor: '#b5b5b5',
         paddingTop: 10,
@@ -16,7 +22,7 @@ export default StyleSheet.create({
 
     box: {
         width: '80%',
-        backgroundColor: '#5482ff',
+        backgroundColor: '#5521ff',
         borderRadius: 20,
         alignSelf: 'center',
         paddingHorizontal: 14,
